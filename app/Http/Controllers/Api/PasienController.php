@@ -26,7 +26,17 @@ class PasienController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $dataPasien = new Pasien();
+        $dataPasien->nama_pasien = $request->nama_pasien;
+        $dataPasien->umur = $request->umur;
+        $dataPasien->jenis_kelamin = $request->jenis_kelamin;
+        $dataPasien->tanggal_lahir = $request->tanggal_lahir;
+        $dataPasien->alamat = $request->alamat;
+
+        return response()->json([
+            'status' => true,
+            'message' => 'berhasil menambahkan data'
+        ]);
     }
 
     /**
@@ -34,7 +44,19 @@ class PasienController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $data = Pasien::find($id);
+        if($data){
+            return response()->json([
+                'status' => true,
+                'message' => 'data tersedia',
+                'data' => $data
+            ]);
+        }else{
+            return response()->json([
+                'status' => false,
+                'message' => 'data tidak tersedia',
+            ]);
+        }
     }
 
     /**
