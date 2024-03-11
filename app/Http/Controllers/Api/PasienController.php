@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Pasien;
+use Illuminate\Support\Facades\Validator;
+// use Dotenv\Validator;
 use Illuminate\Http\Request;
 
 class PasienController extends Controller
@@ -64,7 +66,38 @@ class PasienController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        $dataPasien = Pasien::find($id);
+        if(empty($dataPasien)){
+            return response()->json([
+                'status' => false,
+                'message' => 'data tidak ditemukan',
+            ]);
+
+            $rules = [
+                'nama_pasien' => 'required',
+                'tanggal_lahir' => 'required',
+            ];
+
+            $validator = Validator::make($request->all(), $rules);
+
+            if($validator->fails()){
+                return response()->json([
+                    'status' => false,
+                    'message' => 'gagal mengubah data',
+                    'data' => $validator->errors()
+                ]);
+            }
+
+            $dataPasien->nama_pasien = $request->nama_pasien;
+            $dataPasien->tanggal_lahir = $request->tanggal_lahir;
+            $dataPasien->save();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'berhasil mengubah data'
+            ]);
+        }
     }
 
     /**
