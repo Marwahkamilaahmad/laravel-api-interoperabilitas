@@ -105,6 +105,18 @@ class PasienController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $dataPasien = Pasien::find($id);
+        if(empty($dataPasien)){
+            return response()->json([
+                'status' => false,
+                'message' => 'data tidak ditemukan',
+            ],404);
+        }
+        
+        return response()->json([
+            'status' => true,
+            'message' => 'sukses melakukan penghapusan data',
+        ]);
+
     }
 }

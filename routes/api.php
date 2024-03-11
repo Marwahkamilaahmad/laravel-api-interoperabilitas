@@ -20,3 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('pasien',[PasienController::class, 'index']);
+Route::get('pasien/{id}',[PasienController::class, 'show']);
+Route::post('pasien',[PasienController::class, 'store']);
+Route::put('pasien/{id}',[PasienController::class, 'update']);
+Route::delete('pasien/{id}',[PasienController::class, 'destroy']);
