@@ -42,7 +42,14 @@ class ConsumeController extends Controller
 
         $client = new Client();
         $url = "http://127.0.0.1:8000/api/pasien";
-        $response = $client->request('POST',$url);
+        $response = $client->request('POST',$url, [
+            'headers' => ['Content-type' => 'application/json'],
+            'body' => json_encode($parameter)
+        ]);
+        $content = $response->getBody()->getContents();
+        $contentArrays = json_decode($content, true);
+        
+
     }
 
     /**
