@@ -27,7 +27,6 @@ class ConsumeController extends Controller
      */
     public function store(Request $request)
     {
-
         $nama_pasien = $request->nama_pasien;
         $umur = $request->umur;
         $jenis_kelamin = $request->jenis_kelamin;
@@ -38,7 +37,6 @@ class ConsumeController extends Controller
             'umur' => $umur,
             'jenis_kelamin' => $jenis_kelamin,
             'tanggal_lahir' => $tanggal_lahir,
-
         ];
 
         $client = new Client();
@@ -55,10 +53,6 @@ class ConsumeController extends Controller
         }else{
             return Redirect::back()->with('success', 'berhasil');
         }
-
-        
-
-
 
     }
 
