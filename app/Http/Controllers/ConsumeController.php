@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class ConsumeController extends Controller
 {
@@ -48,7 +49,16 @@ class ConsumeController extends Controller
         ]);
         $content = $response->getBody()->getContents();
         $contentArrays = json_decode($content, true);
+        if($contentArrays['status'] != true){
+            $error = $contentArrays['data'];
+            return Redirect::back()->withErrors($error);
+        }else{
+            return Redirect::back()->with('success', 'berhasil');
+        }
+
         
+
+
 
     }
 
