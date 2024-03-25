@@ -69,7 +69,34 @@ class ConsumeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        $nama_pasien = $request->nama_pasien;
+        $umur = $request->umur;
+        $jenis_kelamin = $request->jenis_kelamin;
+        $tanggal_lahir = $request->tanggal_lahir;
+
+        $parameter = [
+            'nama_pasien' => $nama_pasien,
+            'umur' => $umur,
+            'jenis_kelamin' => $jenis_kelamin,
+            'tanggal_lahir' => $tanggal_lahir,
+        ];
+
+        $client = new Client();
+        $url = "http://127.0.0.1:8000/api/pasien";
+        $response = $client->request('PUT',$url, [
+            'headers' => ['Content-type' => 'application/json'],
+            'body' => json_encode($parameter)
+        ]);
+        $content = $response->getBody()->getContents();
+        $contentArrays = json_decode($content, true);
+        if($contentArrays['status'] != true){
+            $error = $contentArrays['data'];
+            return Redirect::back()->withErrors($error);
+        }else{
+            return Redirect::back()->with('success', 'berhasil');
+        }
+        
     }
 
     /**
@@ -77,6 +104,17 @@ class ConsumeController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $client = new Client();
+        $url = "http://127.0.0.1:8000/api/pasien/".$id;
+        $response = $client->request('DELETE', $url);
+        $content = $response->getBody()->getContents();
+        $contentArrays = json_decode($content, true);
+        if($contentArrays['status'] != true){
+            $error = $contentArrays['data'];
+            return Redirect::back()->withErrors($error);
+        }else{
+            return Redirect::back()->with('success', 'berhasil');
+        }
+
     }
 }
