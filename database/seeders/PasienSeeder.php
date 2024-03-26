@@ -21,7 +21,7 @@ class PasienSeeder extends Seeder
             'tanggal_lahir' => '1992-05-15',
             'alamat' => 'Jl. Contoh No. 123',
         ]);
-
+        
         Pasien::create([
             'nama_pasien' => 'Jane Smith',
             'umur' => 25,
