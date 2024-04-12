@@ -18,6 +18,9 @@ return new class extends Migration
             $table->string('jenis_kelamin');
             $table->string('tanggal_lahir');
             $table->string('alamat');
+            $table->string('nama_wali');
+            $table->string('nomor_ruangan');
+            $table->string('nama_dokter');
             $table->timestamps();
         });
     }

@@ -19,6 +19,9 @@
                     <th>Jenis Kelamin</th>
                     <th>Tanggal Lahir</th>
                     <th>Alamat</th>
+                    <th>Nama Wali</th>
+                    <th>Nomor Ruangan</th>
+                    <th>Nama Dokter</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -30,6 +33,9 @@
                     <td>{{ $item['jenis_kelamin'] }}</td>
                     <td>{{ $item['tanggal_lahir'] }}</td>
                     <td>{{ $item['alamat'] }}</td>
+                    <td>{{ $item['nama_wali'] }}</td>
+                    <td>{{ $item['nomor_ruangan'] }}</td>
+                    <td>{{ $item['nama_dokter'] }}</td>
                     <td>
                         <a href="/datapasien/{{ $item['id'] }}/edit" class="btn btn-warning">Edit</a>
                         <form action="/api/datapasien/{{ $item['id'] }}" method="POST" style="display: inline;">
