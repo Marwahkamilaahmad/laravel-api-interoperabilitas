@@ -25,18 +25,62 @@ class ConsumeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    // public function store(Request $request)
+    // {
+
+    //     $nama_pasien = $request->nama_pasien;
+    //     $umur = $request->umur;
+    //     $jenis_kelamin = $request->jenis_kelamin;
+    //     $tanggal_lahir = $request->tanggal_lahir;
+    //     $alamat = $request->alamat;
+    //     $nama_wali = $request->nama_wali;
+    //     $nomor_ruangan = $request->nomor_ruangan;
+    //     $nama_dokter = $request->nama_dokter;
+
+
+    //     $parameter = [
+    //         'nama_pasien' => $nama_pasien,
+    //         'umur' => $umur,
+    //         'jenis_kelamin' => $jenis_kelamin,
+    //         'tanggal_lahir' => $tanggal_lahir,
+    //         'alamat' => $alamat,
+    //         'nama_wali' => $nama_wali,
+    //         'nomor_ruangan' => $nomor_ruangan,
+    //         'nama_dokter' => $nama_dokter,
+    //     ];
+
+    //     $client = new Client();
+    //     $url = "http://localhost/sait_project_api_crud/mahasiswa_api.php";
+    //     $response = $client->request('POST',$url, [
+    //         'headers' => ['Content-type' => 'application/json'],
+    //         'body' => json_encode($parameter)
+    //     ]);
+    //     $content = $response->getBody()->getContents();
+    //     $data = json_decode($content);
+    //     dd($data);
+    //     $contentArrays = json_decode($content, true);
+    //     // if($contentArrays['status'] != true){
+    //     //     $error = $contentArrays['message'];
+    //     //     return Redirect::back()->withErrors($error);
+    //     // }else{
+    //         return Redirect::route('lihat-datapasien');
+    //     // }
+
+    // }
+
     public function store(Request $request)
     {
-        $nama_pasien = $request->nama_pasien;
-        $umur = $request->umur;
-        $jenis_kelamin = $request->jenis_kelamin;
-        $tanggal_lahir = $request->tanggal_lahir;
-        $alamat = $request->alamat;
-        $nama_wali = $request->nama_wali;
-        $nomor_ruangan = $request->nomor_ruangan;
-        $nama_dokter = $request->nama_dokter;
+        // Ambil data dari form
+        $nama_pasien = $request->input('nama_pasien');
+        $umur = $request->input('umur');
+        $jenis_kelamin = $request->input('jenis_kelamin');
+        $tanggal_lahir = $request->input('tanggal_lahir');
+        $alamat = $request->input('alamat');
+        $nama_wali = $request->input('nama_wali');
+        $nomor_ruangan = $request->input('nomor_ruangan');
+        $nama_dokter = $request->input('nama_dokter');
 
-
+        // Buat array parameter untuk dikirim ke API
         $parameter = [
             'nama_pasien' => $nama_pasien,
             'umur' => $umur,
@@ -48,24 +92,23 @@ class ConsumeController extends Controller
             'nama_dokter' => $nama_dokter,
         ];
 
+        // Kirim permintaan POST ke API menggunakan GuzzleHttp Client
         $client = new Client();
         $url = "http://localhost/sait_project_api_crud/mahasiswa_api.php";
-        $response = $client->request('POST',$url, [
-            'headers' => ['Content-type' => 'application/json'],
-            'body' => json_encode($parameter)
+        $response = $client->request('POST', $url, [
+            'form_params' => $parameter,
         ]);
-        $content = $response->getBody()->getContents();
-        $contentArrays = json_decode($content, true);
-        if($contentArrays['status'] != true){
-            $error = $contentArrays['message'];
-            return Redirect::back()->withErrors($error);
-        }else{
-            return Redirect::back()->with('success', 'berhasil');
-        }
 
+        // Ambil respons dari API
+        $content = $response->getBody()->getContents();
+
+        // Kembalikan respons dari API
+        return response()->json($content);
     }
 
-    
+
+
+
 
     /**
      * Display the specified resource.

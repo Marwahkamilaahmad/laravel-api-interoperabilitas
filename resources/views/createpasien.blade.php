@@ -19,39 +19,57 @@
 
 <div class="container">
     <h2 class="text-center mt-5 mb-4">Tambah Data Pasien</h2>
-    <form class="form" method="post" action="{{ route('tambah-datapasien') }}">
-        @csrf
+
+    <div class="container">
+    <!-- Form -->
+
+    @if ($errors->any())
+    <div class="alert alert-danger mt-4">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
+    <!-- Form -->
+</div>
+
+
+    <form class="form" method="POST"  action="/api/datapasien">
+    <!-- <form class="form" method="POST"  action="{{ route('tambah-datapasien') }}"> -->
         <div class="mb-3">
             <label for="nama_pasien" class="form-label">Nama Pasien</label>
-            <input type="text" class="form-control" id="nama_pasien" placeholder="Nama Lengkap" name="nama_pasien">
+            <input type="text" class="form-control" id="nama_pasien" placeholder="Nama Lengkap" name="nama_pasien" required>
         </div>
         <div class="mb-3">
             <label for="umur" class="form-label">Umur Pasien</label>
-            <input type="text" class="form-control" id="umur" placeholder="Usia" name="umur">
+            <input type="text" class="form-control" id="umur" placeholder="Usia" name="umur" required>
         </div>
         <div class="mb-3">
             <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
-            <input type="text" class="form-control" id="jenis_kelamin" placeholder="Laki-Laki / Perempuan" name="jenis_kelamin">
+            <input type="text" class="form-control" id="jenis_kelamin" placeholder="Laki-Laki / Perempuan" name="jenis_kelamin" required>
         </div>
         <div class="mb-3">
             <label for="tanggal_lahir" class="form-label">Tanggal Lahir</label>
-            <input type="text" class="form-control" id="tanggal_lahir" placeholder="Tanggal Lahir" name="tanggal_lahir">
+            <input type="text" class="form-control" id="tanggal_lahir" placeholder="Tanggal Lahir" name="tanggal_lahir" required>
         </div>
         <div class="mb-3">
             <label for="alamat" class="form-label">Alamat</label>
-            <input type="text" class="form-control" id="alamat" placeholder="Domisili"  name="alamat">
+            <input type="text" class="form-control" id="alamat" placeholder="Domisili"  name="alamat" required>
         </div>
         <div class="mb-3">
             <label for="nama_wali" class="form-label">Nama Wali</label>
-            <input type="text" class="form-control" id="nama_wali" placeholder="Nama Lengkap Wali" name="nama_wali">
+            <input type="text" class="form-control" id="nama_wali" placeholder="Nama Lengkap Wali" name="nama_wali" required>
         </div>
         <div class="mb-3">
             <label for="nomor_ruangan" class="form-label">Nomor Ruangan</label>
-            <input type="text" class="form-control" id="nomor_ruangan" placeholder="Nomor Ruangan"  name="nomor_ruangan">
+            <input type="text" class="form-control" id="nomor_ruangan" placeholder="Nomor Ruangan"  name="nomor_ruangan" required>
         </div>
         <div class="mb-3">
             <label for="nama_dokter" class="form-label">Nama Dokter</label>
-            <input type="text" class="form-control" id="nama_dokter" placeholder="Nama Dokter" name="nama_dokter">
+            <input type="text" class="form-control" id="nama_dokter" placeholder="Nama Dokter" name="nama_dokter" required>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
