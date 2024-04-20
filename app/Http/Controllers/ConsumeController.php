@@ -31,12 +31,21 @@ class ConsumeController extends Controller
         $umur = $request->umur;
         $jenis_kelamin = $request->jenis_kelamin;
         $tanggal_lahir = $request->tanggal_lahir;
+        $alamat = $request->alamat;
+        $nama_wali = $request->nama_wali;
+        $nomor_ruangan = $request->nomor_ruangan;
+        $nama_dokter = $request->nama_dokter;
+
 
         $parameter = [
             'nama_pasien' => $nama_pasien,
             'umur' => $umur,
             'jenis_kelamin' => $jenis_kelamin,
             'tanggal_lahir' => $tanggal_lahir,
+            'alamat' => $alamat,
+            'nama_wali' => $nama_wali,
+            'nomor_ruangan' => $nomor_ruangan,
+            'nama_dokter' => $nama_dokter,
         ];
 
         $client = new Client();
@@ -55,6 +64,8 @@ class ConsumeController extends Controller
         }
 
     }
+
+    
 
     /**
      * Display the specified resource.

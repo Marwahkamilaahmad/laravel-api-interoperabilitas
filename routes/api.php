@@ -28,6 +28,6 @@ Route::put('pasien/{id}',[PasienController::class, 'update']);
 Route::delete('pasien/{id}',[PasienController::class, 'destroy']);
 
 Route::get('datapasien',[ConsumeController::class, 'index']);
-Route::post('datapasien',[ConsumeController::class, 'store']);
+Route::post('datapasien',[ConsumeController::class, 'store'])->name('tambah-datapasien');
 Route::put('datapasien/{id}', [ConsumeController::class, 'update']);
 Route::delete('datapasien/{id}', [ConsumeController::class, 'destroy']);
