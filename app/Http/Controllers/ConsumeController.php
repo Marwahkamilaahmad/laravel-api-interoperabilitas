@@ -98,12 +98,15 @@ class ConsumeController extends Controller
         $response = $client->request('POST', $url, [
             'form_params' => $parameter,
         ]);
-
         // Ambil respons dari API
         $content = $response->getBody()->getContents();
-
-        // Kembalikan respons dari API
-        return response()->json($content);
+        $contentArrays = json_decode($content, true);
+        if($contentArrays['status'] != true){
+        $error = $contentArrays['message'];
+            return Redirect::back()->withErrors($error);
+        }else{
+            return Redirect::route('lihat-datapasien');
+        }
     }
 
 
@@ -137,10 +140,9 @@ class ConsumeController extends Controller
         ];
 
         $client = new Client();
-        $url = "http://localhost/sait_project_api_crud/mahasiswa_api.php/$id";
+        $url = "http://localhost/sait_project_api_crud/mahasiswa_api.php?id=".$id;
         $response = $client->request('PUT',$url, [
-            'headers' => ['Content-type' => 'application/json'],
-            'body' => json_encode($parameter)
+            'form_params' => json_encode($parameter)
         ]);
         $content = $response->getBody()->getContents();
         $contentArrays = json_decode($content, true);
@@ -158,17 +160,19 @@ class ConsumeController extends Controller
      */
     public function destroy(string $id)
     {
+        // dd($id);
         $client = new Client();
-        $url = "http://localhost/sait_project_api_crud/mahasiswa_api.php/$id";
+        $url = "http://localhost/sait_project_api_crud/mahasiswa_api.php?id=".$id;
         $response = $client->request('DELETE', $url);
         $content = $response->getBody()->getContents();
         $contentArrays = json_decode($content, true);
-        if($contentArrays['status'] != true){
-            $error = $contentArrays['message'];
-            return Redirect::back()->withErrors($error);
-        }else{
+        // if($contentArrays['status'] != true){
+        //     $error = $contentArrays['message'];
+        //     return Redirect::back()->withErrors($error);
+        // }else{
+            // dd(json_decode($content));
             return Redirect::back()->with('success', 'berhasil');
-        }
+        // }
 
     }
 }

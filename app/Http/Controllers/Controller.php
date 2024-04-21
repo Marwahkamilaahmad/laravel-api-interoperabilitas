@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
@@ -13,5 +14,9 @@ class Controller extends BaseController
     public function create(){
         return view('createpasien');
     }
-    
+
+    public function put(string $id){
+        return view('editpasien');
+    }
+
 }

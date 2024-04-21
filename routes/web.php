@@ -18,4 +18,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('datapasien/create', [Controller::class, 'create']);
+Route::get('datapasien/{id}/edit', [Controller::class, 'put']);
 
