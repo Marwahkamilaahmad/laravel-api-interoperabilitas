@@ -135,13 +135,18 @@ class ConsumeController extends Controller
         $nama_wali = $request->input('nama_wali');
         $nomor_ruangan = $request->input('nomor_ruangan');
         $nama_dokter = $request->input('nama_dokter');
-
+        
         $parameter = [
             'nama_pasien' => $nama_pasien,
             'umur' => $umur,
             'jenis_kelamin' => $jenis_kelamin,
             'tanggal_lahir' => $tanggal_lahir,
+            'alamat' => $alamat,
+            'nama_wali' => $nama_wali,
+            'nomor_ruangan' => $nomor_ruangan,
+            'nama_dokter' => $nama_dokter,
         ];
+
 
         $client = new Client();
         $url = "http://localhost/sait_project_api_crud/mahasiswa_api.php?id=".$id;
