@@ -127,10 +127,14 @@ class ConsumeController extends Controller
     public function update(Request $request, string $id)
     {
 
-        $nama_pasien = $request->nama_pasien;
-        $umur = $request->umur;
-        $jenis_kelamin = $request->jenis_kelamin;
-        $tanggal_lahir = $request->tanggal_lahir;
+        $nama_pasien = $request->input('nama_pasien');
+        $umur = $request->input('umur');
+        $jenis_kelamin = $request->input('jenis_kelamin');
+        $tanggal_lahir = $request->input('tanggal_lahir');
+        $alamat = $request->input('alamat');
+        $nama_wali = $request->input('nama_wali');
+        $nomor_ruangan = $request->input('nomor_ruangan');
+        $nama_dokter = $request->input('nama_dokter');
 
         $parameter = [
             'nama_pasien' => $nama_pasien,
