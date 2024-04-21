@@ -135,7 +135,7 @@ class ConsumeController extends Controller
         $nama_wali = $request->input('nama_wali');
         $nomor_ruangan = $request->input('nomor_ruangan');
         $nama_dokter = $request->input('nama_dokter');
-        
+
         $parameter = [
             'nama_pasien' => $nama_pasien,
             'umur' => $umur,
@@ -145,22 +145,29 @@ class ConsumeController extends Controller
             'nama_wali' => $nama_wali,
             'nomor_ruangan' => $nomor_ruangan,
             'nama_dokter' => $nama_dokter,
+            'id' => $id
         ];
 
 
         $client = new Client();
         $url = "http://localhost/sait_project_api_crud/mahasiswa_api.php?id=".$id;
-        $response = $client->request('PUT',$url, [
-            'form_params' => json_encode($parameter)
+
+        $response = $client->request('PUT', $url, [
+            'headers' => [
+                'Content-Type' => 'application/x-www-form-urlencoded', // Set tipe konten menjadi application/x-www-form-urlencoded
+            ],
+            'body' => http_build_query($parameter), // Gunakan http_build_query untuk mengonversi array parameter menjadi format x-www-form-urlencoded
         ]);
+
         $content = $response->getBody()->getContents();
         $contentArrays = json_decode($content, true);
         if($contentArrays['status'] != true){
             $error = $contentArrays['message'];
             return Redirect::back()->withErrors($error);
         }else{
-            return Redirect::back()->with('success', 'berhasil');
+            return Redirect::route('lihat-datapasien');
         }
+
 
     }
 

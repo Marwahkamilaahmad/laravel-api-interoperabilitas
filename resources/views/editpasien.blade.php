@@ -38,7 +38,9 @@
 
 @foreach($data as $pasien)
 
-    <form class="form-group" method="PUT"  action="/api/datapasien/{{$pasien['id']}}">
+    <form class="form-group" method="POST"  action="/api/datapasien/{{$pasien['id']}}">
+    @method('PUT')
+    @csrf
         <div class="mb-3">
             <label for="nama_pasien" class="form-label">Nama Pasien</label>
             <input type="text" class="form-control" id="nama_pasien" placeholder="Nama Lengkap" name="nama_pasien" required value="{{$pasien['nama_pasien']}}">
