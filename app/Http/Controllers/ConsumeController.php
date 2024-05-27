@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pasien;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -14,59 +15,16 @@ class ConsumeController extends Controller
     public function index()
     {
         $client = new Client();
+        $dataLokal = Pasien::all();
+
         $url = "http://localhost/sait_project_api_crud/mahasiswa_api.php";
         $response = $client->request('GET', $url);
         $content = $response->getBody()->getContents();
         $contentArray = json_decode($content, true);
         $data = $contentArray['data'];
-        return view('pasien.tablePasien', compact('data'));
+        return view('pasien.tablePasien', compact('data', 'dataLokal'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    // public function store(Request $request)
-    // {
-
-    //     $nama_pasien = $request->nama_pasien;
-    //     $umur = $request->umur;
-    //     $jenis_kelamin = $request->jenis_kelamin;
-    //     $tanggal_lahir = $request->tanggal_lahir;
-    //     $alamat = $request->alamat;
-    //     $nama_wali = $request->nama_wali;
-    //     $nomor_ruangan = $request->nomor_ruangan;
-    //     $nama_dokter = $request->nama_dokter;
-
-
-    //     $parameter = [
-    //         'nama_pasien' => $nama_pasien,
-    //         'umur' => $umur,
-    //         'jenis_kelamin' => $jenis_kelamin,
-    //         'tanggal_lahir' => $tanggal_lahir,
-    //         'alamat' => $alamat,
-    //         'nama_wali' => $nama_wali,
-    //         'nomor_ruangan' => $nomor_ruangan,
-    //         'nama_dokter' => $nama_dokter,
-    //     ];
-
-    //     $client = new Client();
-    //     $url = "http://localhost/sait_project_api_crud/mahasiswa_api.php";
-    //     $response = $client->request('POST',$url, [
-    //         'headers' => ['Content-type' => 'application/json'],
-    //         'body' => json_encode($parameter)
-    //     ]);
-    //     $content = $response->getBody()->getContents();
-    //     $data = json_decode($content);
-    //     dd($data);
-    //     $contentArrays = json_decode($content, true);
-    //     // if($contentArrays['status'] != true){
-    //     //     $error = $contentArrays['message'];
-    //     //     return Redirect::back()->withErrors($error);
-    //     // }else{
-    //         return Redirect::route('lihat-datapasien');
-    //     // }
-
-    // }
 
     public function store(Request $request)
     {
@@ -91,6 +49,16 @@ class ConsumeController extends Controller
             'nomor_ruangan' => $nomor_ruangan,
             'nama_dokter' => $nama_dokter,
         ];
+        $pasien = new Pasien();
+        $pasien->nama_pasien = $nama_pasien;
+        $pasien->umur = $umur;
+        $pasien->jenis_kelamin = $jenis_kelamin;
+        $pasien->tanggal_lahir = $tanggal_lahir;
+        $pasien->alamat = $alamat;
+        $pasien->nama_wali = $nama_wali;
+        $pasien->nomor_ruangan = $nomor_ruangan;
+        $pasien->nama_dokter = $nama_dokter;
+        $pasien->save();
 
         // Kirim permintaan POST ke API menggunakan GuzzleHttp Client
         $client = new Client();
@@ -107,6 +75,8 @@ class ConsumeController extends Controller
         }else{
             return Redirect::route('lihat-datapasien');
         }
+
+
     }
 
 
@@ -135,6 +105,21 @@ class ConsumeController extends Controller
         $nama_wali = $request->input('nama_wali');
         $nomor_ruangan = $request->input('nomor_ruangan');
         $nama_dokter = $request->input('nama_dokter');
+
+        $pasien = Pasien::findOrFail($id);
+
+        // Perbarui nilai atribut pasien sesuai dengan data yang diterima dari permintaan
+        $pasien->nama_pasien = $nama_pasien;
+        $pasien->umur = $umur;
+        $pasien->jenis_kelamin = $jenis_kelamin;
+        $pasien->tanggal_lahir = $tanggal_lahir;
+        $pasien->alamat = $alamat;
+        $pasien->nama_wali = $nama_wali;
+        $pasien->nomor_ruangan = $nomor_ruangan;
+        $pasien->nama_dokter = $nama_dokter;
+
+        // Simpan perubahan ke database
+        $pasien->save();
 
         $parameter = [
             'nama_pasien' => $nama_pasien,
@@ -178,6 +163,11 @@ class ConsumeController extends Controller
     {
         // dd($id);
         $client = new Client();
+        $pasien = Pasien::findOrFail($id);
+
+        // Hapus data pasien dari database
+        $pasien->delete();
+
         $url = "http://localhost/sait_project_api_crud/mahasiswa_api.php?id=".$id;
         $response = $client->request('DELETE', $url);
         $content = $response->getBody()->getContents();
